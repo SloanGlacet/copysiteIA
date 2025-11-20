@@ -419,20 +419,20 @@
 
                 <div class="feature-list" style="margin-top: 50px;">
                     <div class="feature-item">
-                        <h4>30 secondes</h4>
-                        <p>Clonage ultra-rapide</p>
+                        <h4>60 secondes</h4>
+                        <p>Site complet et professionnel</p>
                     </div>
                     <div class="feature-item">
-                        <h4>Structure identique</h4>
-                        <p>Layout et sections</p>
+                        <h4>6-8 sections</h4>
+                        <p>Hero, services, témoignages, footer...</p>
                     </div>
                     <div class="feature-item">
-                        <h4>Responsive</h4>
-                        <p>Mobile + Desktop</p>
+                        <h4>Design avancé</h4>
+                        <p>Animations, gradients, hover effects</p>
                     </div>
                     <div class="feature-item">
                         <h4>Code propre</h4>
-                        <p>HTML/CSS moderne</p>
+                        <p>HTML/CSS commenté et organisé</p>
                     </div>
                 </div>
 
@@ -441,7 +441,7 @@
 
             <div class="customization-section" id="customizationSection" style="display: none;">
                 <h2>Site détecté !</h2>
-                <p style="color: rgba(255,255,255,0.7); font-size: 1.1em; margin-bottom: 30px;" id="detectedUrl"></p>
+                <p style="color: rgba(255,255,255,0.7); font-size: 1.1em; margin-bottom: 30px; word-break: break-all;" id="detectedUrl"></p>
                 
                 <div class="detected-info" style="background: rgba(255,255,255,0.08); padding: 30px; border-radius: 20px; margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.1);">
                     <h3 style="color: white; margin-bottom: 15px; font-size: 1.3em;">Analyse préliminaire</h3>
@@ -456,7 +456,7 @@
                         </div>
                         <div style="color: rgba(255,255,255,0.9);">
                             <strong style="display: block; margin-bottom: 5px;">Temps estimé:</strong>
-                            <span id="estimatedTime">25-30 secondes</span>
+                            <span id="estimatedTime">45-60 secondes</span>
                         </div>
                     </div>
                 </div>
@@ -621,26 +621,69 @@
         }
 
         async function performCloning(url, customizations) {
-            const prompt = `Tu es un expert en développement web. Ton rôle est de créer un clone HTML/CSS d'un site web.
+            const prompt = `Tu es un développeur web expert spécialisé dans la création de sites web modernes et professionnels. Tu dois créer un clone HTML/CSS complet et de haute qualité.
 
 URL à cloner: ${url}
 ${customizations ? `Personnalisations demandées: ${customizations}` : ''}
 
-Génère un site web HTML complet qui reproduit la STRUCTURE du site cible:
+INSTRUCTIONS DÉTAILLÉES :
 
-1. Analyse la structure typique pour ce type de site (sections communes)
-2. Crée un HTML complet et moderne avec:
-   - Header avec navigation
-   - Section Hero
-   - Sections de contenu principales
-   - Footer
-3. CSS intégré, design moderne et responsive
-4. Utilise des couleurs professionnelles
-5. Ajoute du contenu placeholder réaliste
+1. STRUCTURE COMPLÈTE DU SITE (minimum 6-8 sections) :
+   - Header sticky avec logo et navigation moderne
+   - Section Hero immersive avec grand titre, sous-titre et CTA
+   - Section "À propos" / "Services" avec icônes
+   - Section "Features" / "Avantages" avec cartes
+   - Section "Témoignages" / "Avis clients" si pertinent
+   - Section "Galerie" / "Portfolio" si applicable
+   - Section "Pricing" / "Tarifs" si c'est un site commercial
+   - Section "Contact" / "Newsletter" avec formulaire
+   - Footer complet avec liens, réseaux sociaux, mentions légales
 
-${customizations ? 'Applique les personnalisations demandées.' : ''}
+2. DESIGN MODERNE ET PROFESSIONNEL :
+   - Utilise des dégradés de couleurs élégants
+   - Ajoute des ombres subtiles (box-shadow)
+   - Transitions et animations CSS fluides
+   - Espacement généreux et aéré
+   - Typographie hiérarchisée (titres clairs)
+   - Boutons avec effet hover
+   - Cards avec effet hover (translateY, shadow)
 
-IMPORTANT: Réponds UNIQUEMENT avec le code HTML complet, prêt à être utilisé. Commence directement par <!DOCTYPE html> sans aucun texte avant ou après. Ne mets PAS le code entre des balises markdown ou des backticks.`;
+3. CSS AVANCÉ :
+   - Animations @keyframes pour les entrées
+   - Transitions sur tous les éléments interactifs
+   - Hover effects sur les boutons et cartes
+   - Gradient backgrounds
+   - Border-radius modernes (12px-20px)
+   - Box-shadow multiples pour la profondeur
+
+4. RESPONSIVE DESIGN :
+   - Media queries pour mobile, tablette, desktop
+   - Navigation hamburger sur mobile
+   - Grid et flexbox adaptatifs
+   - Images responsive
+
+5. CONTENU RÉALISTE :
+   - Textes longs et détaillés (pas juste 2 mots)
+   - Plusieurs paragraphes dans chaque section
+   - Listes à puces complètes
+   - Formulaires fonctionnels
+   - Placeholders d'images descriptifs
+
+6. ÉLÉMENTS VISUELS :
+   - Icônes (utilise des emoji ou des symboles Unicode élégants)
+   - Cartes bien espacées avec padding généreux
+   - Sections alternées (fond blanc / fond coloré)
+   - Effets de profondeur avec z-index
+
+${customizations ? 'IMPORTANT : Applique toutes les personnalisations demandées en plus de ces instructions.' : ''}
+
+CODE FINAL :
+- Un seul fichier HTML avec CSS intégré dans <style>
+- Code propre, indenté et commenté
+- Prêt à l'emploi, professionnel
+- Minimum 400 lignes de code
+
+RÉPONDS UNIQUEMENT AVEC LE CODE HTML COMPLET. Commence directement par <!DOCTYPE html> sans texte avant ou après, sans balises markdown ou backticks.`;
 
             const response = await fetch("https://api.anthropic.com/v1/messages", {
                 method: "POST",
@@ -649,7 +692,7 @@ IMPORTANT: Réponds UNIQUEMENT avec le code HTML complet, prêt à être utilis�
                 },
                 body: JSON.stringify({
                     model: "claude-sonnet-4-20250514",
-                    max_tokens: 4000,
+                    max_tokens: 8000,
                     messages: [
                         { role: "user", content: prompt }
                     ]
@@ -680,7 +723,7 @@ IMPORTANT: Réponds UNIQUEMENT avec le code HTML complet, prêt à être utilis�
             let html = `
                 <div class="preview-section">
                     <h3>Site cloné avec succès !</h3>
-                    <p style="opacity: 0.8; margin-bottom: 20px;">Basé sur: ${originalUrl}</p>
+                    <p style="opacity: 0.8; margin-bottom: 20px; word-break: break-all;">Basé sur: ${originalUrl}</p>
                     
                     <div class="code-preview">
                         <button class="copy-btn" onclick="copyCode()">Copier</button>
