@@ -461,6 +461,17 @@
                     </div>
                 </div>
 
+                <!-- Section collecte email -->
+                <div class="email-section" id="emailSection" style="background: linear-gradient(135deg, rgba(251, 146, 60, 0.15) 0%, rgba(217, 119, 6, 0.2) 100%); border: 2px solid rgba(251, 146, 60, 0.3); padding: 30px; border-radius: 20px; margin-bottom: 30px;">
+                    <h3 style="color: white; margin-bottom: 15px; font-size: 1.3em; text-align: center;">Clonage gratuit en BETA</h3>
+                    <p style="color: rgba(255,255,255,0.9); text-align: center; margin-bottom: 25px;">Profitez du clonage gratuit pendant notre phase BETA. Entrez votre email pour être notifié des futures offres Premium.</p>
+                    
+                    <div class="input-group" style="max-width: 500px; margin: 0 auto;">
+                        <input type="email" id="userEmail" placeholder="votre@email.com" required style="font-size: 1.1em; padding: 18px 20px; text-align: center; margin-bottom: 15px;">
+                        <p style="color: rgba(255,255,255,0.6); font-size: 0.85em; text-align: center; margin-top: 10px;">Vos données sont sécurisées. Pas de spam.</p>
+                    </div>
+                </div>
+
                 <div class="customization-choice" style="text-align: center; margin: 40px 0;">
                     <h3 style="color: white; margin-bottom: 25px; font-size: 1.5em;">Voulez-vous personnaliser le clone ?</h3>
                     
@@ -577,12 +588,67 @@
         }
 
         function cloneWithoutCustomization() {
+            const email = document.getElementById('userEmail').value;
+            
+            if (!email || !isValidEmail(email)) {
+                showError('Veuillez entrer une adresse email valide');
+                document.getElementById('userEmail').focus();
+                return;
+            }
+            
+            // Sauvegarder l'email (localStorage pour l'instant)
+            saveEmail(email);
+            
             cloneWebsite(currentUrl, '');
         }
 
         function cloneWithCustomization() {
+            const email = document.getElementById('userEmail').value;
             const customizations = document.getElementById('customizations').value;
+            
+            if (!email || !isValidEmail(email)) {
+                showError('Veuillez entrer une adresse email valide');
+                document.getElementById('userEmail').focus();
+                return;
+            }
+            
+            // Sauvegarder l'email
+            saveEmail(email);
+            
             cloneWebsite(currentUrl, customizations);
+        }
+
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function saveEmail(email) {
+            // Préparer les données à envoyer
+            const data = {
+                email: email,
+                date: new Date().toLocaleDateString('fr-FR'),
+                time: new Date().toLocaleTimeString('fr-FR'),
+                url: currentUrl
+            };
+            
+            // Envoyer à Google Sheets
+            fetch('https://script.google.com/macros/s/AKfycbwXpkrZCs8JeW4eqoh7S_TQhiRnVskoQEVa49inur-vfVWegztsHtqz9Q6kdbZa-RJN/exec', {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            }).then(() => {
+                console.log('Email sauvegardé dans Google Sheets:', email);
+            }).catch(error => {
+                console.error('Erreur lors de la sauvegarde:', error);
+                // Fallback: sauvegarder en local si échec
+                const emails = JSON.parse(localStorage.getItem('clonesite_emails') || '[]');
+                emails.push(data);
+                localStorage.setItem('clonesite_emails', JSON.stringify(emails));
+            });
         }
 
         function resetToStart() {
