@@ -591,14 +591,35 @@
             const email = document.getElementById('userEmail').value;
             
             if (!email || !isValidEmail(email)) {
-                showError('Veuillez entrer une adresse email valide');
+                // Scroll vers le champ email et afficher l'erreur
+                document.getElementById('emailSection').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                document.getElementById('userEmail').style.borderColor = '#ff6b6b';
                 document.getElementById('userEmail').focus();
+                
+                // Afficher un message d'erreur temporaire
+                const emailSection = document.getElementById('emailSection');
+                const existingError = emailSection.querySelector('.email-error');
+                if (!existingError) {
+                    const errorMsg = document.createElement('p');
+                    errorMsg.className = 'email-error';
+                    errorMsg.style.color = '#ff6b6b';
+                    errorMsg.style.textAlign = 'center';
+                    errorMsg.style.marginTop = '10px';
+                    errorMsg.textContent = 'Veuillez entrer une adresse email valide';
+                    emailSection.appendChild(errorMsg);
+                    
+                    setTimeout(() => errorMsg.remove(), 3000);
+                }
                 return;
             }
             
-            // Sauvegarder l'email (localStorage pour l'instant)
+            // Réinitialiser le style du champ email
+            document.getElementById('userEmail').style.borderColor = '';
+            
+            // Sauvegarder l'email
             saveEmail(email);
             
+            // Continuer avec le clonage
             cloneWebsite(currentUrl, '');
         }
 
@@ -607,14 +628,35 @@
             const customizations = document.getElementById('customizations').value;
             
             if (!email || !isValidEmail(email)) {
-                showError('Veuillez entrer une adresse email valide');
+                // Scroll vers le champ email et afficher l'erreur
+                document.getElementById('emailSection').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                document.getElementById('userEmail').style.borderColor = '#ff6b6b';
                 document.getElementById('userEmail').focus();
+                
+                // Afficher un message d'erreur temporaire
+                const emailSection = document.getElementById('emailSection');
+                const existingError = emailSection.querySelector('.email-error');
+                if (!existingError) {
+                    const errorMsg = document.createElement('p');
+                    errorMsg.className = 'email-error';
+                    errorMsg.style.color = '#ff6b6b';
+                    errorMsg.style.textAlign = 'center';
+                    errorMsg.style.marginTop = '10px';
+                    errorMsg.textContent = 'Veuillez entrer une adresse email valide';
+                    emailSection.appendChild(errorMsg);
+                    
+                    setTimeout(() => errorMsg.remove(), 3000);
+                }
                 return;
             }
+            
+            // Réinitialiser le style du champ email
+            document.getElementById('userEmail').style.borderColor = '';
             
             // Sauvegarder l'email
             saveEmail(email);
             
+            // Continuer avec le clonage
             cloneWebsite(currentUrl, customizations);
         }
 
