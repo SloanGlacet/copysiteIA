@@ -519,7 +519,7 @@
             <div class="loading" id="loading">
                 <div class="spinner"></div>
                 <h3>Clonage en cours...</h3>
-                <p>L'IA analyse la structure et génère le code</p>
+                <p>Analyse de la structure du site original et génération du code</p>
             </div>
 
             <div class="results" id="results">
@@ -620,23 +620,86 @@
             }
         }
 
+        async function analyzeWebsiteStructure(url) {
+            try {
+                // Utiliser un proxy CORS pour récupérer le contenu
+                const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+                
+                const response = await fetch(proxyUrl);
+                const html = await response.text();
+                
+                // Créer un parser DOM temporaire
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                
+                // Analyser la structure
+                const structure = {
+                    hasHeader: !!doc.querySelector('header, nav, [role="navigation"]'),
+                    hasHero: !!doc.querySelector('.hero, .banner, .jumbotron, section:first-of-type'),
+                    sectionsCount: doc.querySelectorAll('section, .section, main > div').length,
+                    hasTestimonials: !!doc.querySelector('.testimonial, .review, .avis'),
+                    hasGallery: !!doc.querySelector('.gallery, .portfolio, .images'),
+                    hasPricing: !!doc.querySelector('.pricing, .tarif, .price'),
+                    hasContact: !!doc.querySelector('.contact, form[action*="contact"]'),
+                    hasFooter: !!doc.querySelector('footer'),
+                    // Analyser les couleurs dominantes
+                    backgroundColor: window.getComputedStyle(doc.body).backgroundColor,
+                    // Compter les cartes/éléments
+                    cardsCount: doc.querySelectorAll('.card, .box, .item, article').length
+                };
+                
+                return structure;
+            } catch (error) {
+                console.log('Analyse directe impossible, utilisation du mode estimation');
+                // Si le fetch échoue (CORS, etc.), on retourne une structure estimée
+                return null;
+            }
+        }
+
         async function performCloning(url, customizations) {
+            // Analyser la structure du site original
+            const structure = await analyzeWebsiteStructure(url);
+            
+            // Construire une description détaillée de la structure
+            let structureDescription = '';
+            if (structure) {
+                structureDescription = `
+STRUCTURE DÉTECTÉE DU SITE ORIGINAL :
+- Header/Navigation: ${structure.hasHeader ? 'OUI' : 'NON'}
+- Section Hero: ${structure.hasHero ? 'OUI' : 'NON'}
+- Nombre de sections: ${structure.sectionsCount}
+- Témoignages: ${structure.hasTestimonials ? 'OUI' : 'NON'}
+- Galerie/Portfolio: ${structure.hasGallery ? 'OUI' : 'NON'}
+- Section Tarifs: ${structure.hasPricing ? 'OUI' : 'NON'}
+- Contact/Formulaire: ${structure.hasContact ? 'OUI' : 'NON'}
+- Footer: ${structure.hasFooter ? 'OUI' : 'NON'}
+- Nombre de cartes: ${structure.cardsCount}
+
+IMPORTANT : Reproduis EXACTEMENT cette structure dans le même ordre avec le même nombre d'éléments.
+`;
+            }
+
             const prompt = `Tu es un développeur web expert spécialisé dans la création de sites web modernes et professionnels. Tu dois créer un clone HTML/CSS complet et de haute qualité.
 
 URL à cloner: ${url}
 ${customizations ? `Personnalisations demandées: ${customizations}` : ''}
 
+${structureDescription}
+
 INSTRUCTIONS DÉTAILLÉES :
 
-1. STRUCTURE COMPLÈTE DU SITE (minimum 6-8 sections) :
+1. STRUCTURE COMPLÈTE DU SITE :
+   ${structure ? `- Respecte EXACTEMENT la structure détectée ci-dessus
+   - Reproduis le même nombre de sections (${structure.sectionsCount})
+   - Utilise le même ordre des éléments` : `- Crée minimum 6-8 sections complètes`}
    - Header sticky avec logo et navigation moderne
    - Section Hero immersive avec grand titre, sous-titre et CTA
    - Section "À propos" / "Services" avec icônes
    - Section "Features" / "Avantages" avec cartes
-   - Section "Témoignages" / "Avis clients" si pertinent
-   - Section "Galerie" / "Portfolio" si applicable
-   - Section "Pricing" / "Tarifs" si c'est un site commercial
-   - Section "Contact" / "Newsletter" avec formulaire
+   ${structure?.hasTestimonials ? '- Section Témoignages (OBLIGATOIRE détecté sur le site)' : '- Section Témoignages si pertinent'}
+   ${structure?.hasGallery ? '- Section Galerie (OBLIGATOIRE détecté sur le site)' : '- Section Galerie si applicable'}
+   ${structure?.hasPricing ? '- Section Pricing/Tarifs (OBLIGATOIRE détecté sur le site)' : '- Section Pricing si commercial'}
+   ${structure?.hasContact ? '- Section Contact avec formulaire (OBLIGATOIRE détecté sur le site)' : '- Section Contact'}
    - Footer complet avec liens, réseaux sociaux, mentions légales
 
 2. DESIGN MODERNE ET PROFESSIONNEL :
@@ -647,6 +710,7 @@ INSTRUCTIONS DÉTAILLÉES :
    - Typographie hiérarchisée (titres clairs)
    - Boutons avec effet hover
    - Cards avec effet hover (translateY, shadow)
+   ${structure?.cardsCount ? `- Crée ${Math.max(structure.cardsCount, 6)} cartes/éléments similaires` : ''}
 
 3. CSS AVANCÉ :
    - Animations @keyframes pour les entrées
