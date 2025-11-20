@@ -15,198 +15,14 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #1a1d28;
+            background: #000000;
             min-height: 100vh;
             padding: 20px;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* Animated liquid waves background */
-        body::before {
-            content: '';
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><path d="M0,300 Q300,250 600,280 T1200,300 L1200,600 L0,600 Z" fill="%23404555" opacity="0.9"/><path d="M0,350 Q300,320 600,340 T1200,360 L1200,600 L0,600 Z" fill="%23505565" opacity="0.8"/><path d="M0,380 Q300,360 600,380 T1200,400 L1200,600 L0,600 Z" fill="%23606575" opacity="0.7"/><path d="M0,420 Q300,400 600,420 T1200,440 L1200,600 L0,600 Z" fill="%23707585" opacity="0.6"/><path d="M0,460 Q300,440 600,460 T1200,480 L1200,600 L0,600 Z" fill="%23808595" opacity="0.5"/><path d="M0,500 Q300,480 600,500 T1200,520 L1200,600 L0,600 Z" fill="%239095a5" opacity="0.4"/></svg>') 
-                no-repeat center bottom;
-            background-size: cover;
-            animation: waveFlow 25s ease-in-out infinite;
-            z-index: 0;
-            filter: blur(1px);
-            transform-origin: center bottom;
-        }
-
-        @keyframes waveFlow {
-            0%, 100% { 
-                transform: translateX(0%) translateY(0%) scale(1);
-            }
-            25% { 
-                transform: translateX(5%) translateY(-3%) scale(1.05);
-            }
-            50% { 
-                transform: translateX(-3%) translateY(-5%) scale(1.08);
-            }
-            75% { 
-                transform: translateX(4%) translateY(-2%) scale(1.03);
-            }
-        }
-
-        /* Liquid flowing effect overlay */
-        body::after {
-            content: '';
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 70%;
-            background: 
-                radial-gradient(ellipse 800px 400px at 20% 100%, rgba(144, 149, 165, 0.3) 0%, transparent 50%),
-                radial-gradient(ellipse 700px 350px at 80% 100%, rgba(112, 117, 133, 0.25) 0%, transparent 50%),
-                radial-gradient(ellipse 600px 300px at 50% 100%, rgba(128, 133, 149, 0.2) 0%, transparent 50%);
-            animation: liquidFlow 30s ease-in-out infinite;
-            z-index: 0;
-            filter: blur(40px);
-        }
-
-        @keyframes liquidFlow {
-            0%, 100% { 
-                transform: translateX(0%) scale(1);
-                opacity: 0.6;
-            }
-            33% { 
-                transform: translateX(-8%) scale(1.1);
-                opacity: 0.7;
-            }
-            66% { 
-                transform: translateX(8%) scale(1.05);
-                opacity: 0.65;
-            }
-        }
-
-        /* Floating liquid blobs */
-        .blob1, .blob2, .blob3 {
-            position: fixed;
-            filter: blur(60px);
-            z-index: 0;
-            animation-iteration-count: infinite;
-            animation-timing-function: ease-in-out;
-            mix-blend-mode: screen;
-            opacity: 0.4;
-        }
-
-        .blob1 {
-            width: 700px;
-            height: 500px;
-            background: radial-gradient(ellipse, 
-                rgba(160, 165, 180, 0.5) 0%, 
-                rgba(144, 149, 165, 0.3) 40%,
-                transparent 70%);
-            bottom: -100px;
-            right: 10%;
-            border-radius: 45% 55% 60% 40% / 50% 45% 55% 50%;
-            animation: blob1Liquid 28s infinite;
-        }
-
-        .blob2 {
-            width: 800px;
-            height: 550px;
-            background: radial-gradient(ellipse, 
-                rgba(144, 149, 165, 0.45) 0%, 
-                rgba(128, 133, 149, 0.3) 40%,
-                transparent 70%);
-            bottom: -150px;
-            left: 5%;
-            border-radius: 55% 45% 50% 50% / 45% 55% 45% 55%;
-            animation: blob2Liquid 32s infinite;
-        }
-
-        .blob3 {
-            width: 650px;
-            height: 480px;
-            background: radial-gradient(ellipse, 
-                rgba(176, 181, 196, 0.4) 0%, 
-                rgba(160, 165, 180, 0.25) 40%,
-                transparent 70%);
-            bottom: -80px;
-            left: 40%;
-            border-radius: 50% 50% 55% 45% / 55% 50% 50% 45%;
-            animation: blob3Liquid 35s infinite;
-        }
-
-        @keyframes blob1Liquid {
-            0%, 100% { 
-                transform: translate(0, 0) rotate(0deg);
-                border-radius: 45% 55% 60% 40% / 50% 45% 55% 50%;
-            }
-            33% { 
-                transform: translate(-60px, 40px) rotate(120deg);
-                border-radius: 60% 40% 45% 55% / 55% 50% 45% 50%;
-            }
-            66% { 
-                transform: translate(50px, -30px) rotate(240deg);
-                border-radius: 40% 60% 50% 50% / 45% 55% 50% 50%;
-            }
-        }
-
-        @keyframes blob2Liquid {
-            0%, 100% { 
-                transform: translate(0, 0) rotate(0deg) scale(1);
-                border-radius: 55% 45% 50% 50% / 45% 55% 45% 55%;
-            }
-            33% { 
-                transform: translate(70px, -40px) rotate(120deg) scale(1.08);
-                border-radius: 45% 55% 45% 55% / 50% 50% 55% 45%;
-            }
-            66% { 
-                transform: translate(-50px, 50px) rotate(240deg) scale(0.95);
-                border-radius: 50% 50% 55% 45% / 55% 45% 50% 50%;
-            }
-        }
-
-        @keyframes blob3Liquid {
-            0%, 100% { 
-                transform: translate(0, 0) rotate(0deg);
-                border-radius: 50% 50% 55% 45% / 55% 50% 50% 45%;
-            }
-            50% { 
-                transform: translate(60px, -60px) rotate(180deg);
-                border-radius: 45% 55% 45% 55% / 50% 50% 55% 45%;
-            }
-        }
-
-        /* Parallax scroll effect */
-        @media (prefers-reduced-motion: no-preference) {
-            body::before {
-                transition: transform 0.1s ease-out;
-                transform: translateY(calc(var(--scroll-y, 0px) * -0.5));
-            }
-            
-            body::after {
-                transform: translateY(calc(var(--scroll-y, 0px) * -0.3));
-            }
-            
-            .blob1 {
-                transform: translateY(calc(var(--scroll-y, 0px) * -0.4));
-            }
-            
-            .blob2 {
-                transform: translateY(calc(var(--scroll-y, 0px) * -0.25));
-            }
-            
-            .blob3 {
-                transform: translateY(calc(var(--scroll-y, 0px) * -0.35));
-            }
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            position: relative;
-            z-index: 1;
         }
 
         .header {
@@ -215,6 +31,27 @@
             margin-bottom: 50px;
             padding: 60px 20px 40px;
             animation: fadeInDown 0.8s ease;
+        }
+
+        .pricing-nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 12px 30px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .pricing-nav-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
         }
 
         @keyframes fadeInDown {
@@ -232,7 +69,7 @@
             font-size: 3.5em;
             font-weight: 800;
             margin-bottom: 20px;
-            background: linear-gradient(135deg, #ffffff 0%, #cccccc 100%);
+            background: linear-gradient(135deg, #fb923c 0%, #d97706 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -325,15 +162,15 @@
         .clone-btn {
             width: 100%;
             padding: 22px;
-            background: linear-gradient(135deg, #ffffff 0%, #888888 100%);
-            color: #000000;
+            background: linear-gradient(135deg, #fb923c 0%, #d97706 100%);
+            color: #ffffff;
             border: none;
             border-radius: 15px;
             font-size: 1.2em;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 20px 40px rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(251, 146, 60, 0.3);
             position: relative;
             overflow: hidden;
         }
@@ -355,7 +192,7 @@
 
         .clone-btn:hover:not(:disabled) {
             transform: translateY(-3px);
-            box-shadow: 0 25px 50px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 25px 50px rgba(251, 146, 60, 0.4);
         }
 
         .clone-btn:disabled {
@@ -458,17 +295,17 @@
         .download-section {
             text-align: center;
             padding: 40px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(150, 150, 150, 0.15) 100%);
+            background: linear-gradient(135deg, rgba(251, 146, 60, 0.15) 0%, rgba(217, 119, 6, 0.2) 100%);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(251, 146, 60, 0.3);
             border-radius: 25px;
             color: white;
             margin-bottom: 30px;
         }
 
         .download-btn {
-            background: white;
-            color: #000000;
+            background: linear-gradient(135deg, #fb923c 0%, #d97706 100%);
+            color: white;
             padding: 18px 50px;
             border: none;
             border-radius: 12px;
@@ -481,7 +318,7 @@
 
         .download-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(251, 146, 60, 0.4);
         }
 
         .new-clone-btn {
@@ -557,12 +394,11 @@
     </style>
 </head>
 <body>
-    <div class="blob1"></div>
-    <div class="blob2"></div>
-    <div class="blob3"></div>
-    
     <div class="container">
         <div class="header">
+            <div style="text-align: right; margin-bottom: 30px;">
+                <a href="pricing.html" class="pricing-nav-btn">Voir les tarifs</a>
+            </div>
             <h1>🎨 CloneSite AI</h1>
             <p>Recréez n'importe quel site web instantanément avec l'IA</p>
             <p style="font-size: 1em; margin-top: 10px; opacity: 0.7;">Structure identique, code moderne, 100% personnalisable</p>
@@ -578,24 +414,24 @@
                 </div>
 
                 <button class="clone-btn" id="cloneBtn" onclick="validateUrl()" style="font-size: 1.4em; padding: 28px;">
-                    🚀 Analyser ce site
+                    Analyser ce site
                 </button>
 
                 <div class="feature-list" style="margin-top: 50px;">
                     <div class="feature-item">
-                        <h4>⚡ 30 secondes</h4>
+                        <h4>30 secondes</h4>
                         <p>Clonage ultra-rapide</p>
                     </div>
                     <div class="feature-item">
-                        <h4>🎨 Structure identique</h4>
+                        <h4>Structure identique</h4>
                         <p>Layout et sections</p>
                     </div>
                     <div class="feature-item">
-                        <h4>📱 Responsive</h4>
+                        <h4>Responsive</h4>
                         <p>Mobile + Desktop</p>
                     </div>
                     <div class="feature-item">
-                        <h4>💎 Code propre</h4>
+                        <h4>Code propre</h4>
                         <p>HTML/CSS moderne</p>
                     </div>
                 </div>
@@ -604,11 +440,11 @@
             </div>
 
             <div class="customization-section" id="customizationSection" style="display: none;">
-                <h2>✅ Site détecté !</h2>
+                <h2>Site détecté !</h2>
                 <p style="color: rgba(255,255,255,0.7); font-size: 1.1em; margin-bottom: 30px;" id="detectedUrl"></p>
                 
                 <div class="detected-info" style="background: rgba(255,255,255,0.08); padding: 30px; border-radius: 20px; margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.1);">
-                    <h3 style="color: white; margin-bottom: 15px; font-size: 1.3em;">📊 Analyse préliminaire</h3>
+                    <h3 style="color: white; margin-bottom: 15px; font-size: 1.3em;">Analyse préliminaire</h3>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px;">
                         <div style="color: rgba(255,255,255,0.9);">
                             <strong style="display: block; margin-bottom: 5px;">Type détecté:</strong>
@@ -630,8 +466,8 @@
                     
                     <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
                         <button onclick="cloneWithoutCustomization()" style="
-                            background: linear-gradient(135deg, #ffffff 0%, #888888 100%);
-                            color: #000000;
+                            background: linear-gradient(135deg, #fb923c 0%, #d97706 100%);
+                            color: #ffffff;
                             padding: 20px 40px;
                             border: none;
                             border-radius: 15px;
@@ -639,9 +475,9 @@
                             font-weight: 700;
                             cursor: pointer;
                             transition: all 0.3s;
-                            box-shadow: 0 15px 40px rgba(255, 255, 255, 0.2);
+                            box-shadow: 0 15px 40px rgba(251, 146, 60, 0.3);
                         ">
-                            ⚡ Cloner maintenant
+                            Cloner maintenant
                         </button>
                         
                         <button onclick="showCustomizationOptions()" style="
@@ -649,34 +485,34 @@
                             backdrop-filter: blur(10px);
                             color: white;
                             padding: 20px 40px;
-                            border: 2px solid rgba(255, 255, 255, 0.3);
+                            border: 2px solid rgba(251, 146, 60, 0.5);
                             border-radius: 15px;
                             font-size: 1.2em;
                             font-weight: 700;
                             cursor: pointer;
                             transition: all 0.3s;
                         ">
-                            🎨 Personnaliser d'abord
+                            Personnaliser d'abord
                         </button>
                     </div>
                 </div>
 
                 <div id="customizationForm" style="display: none; margin-top: 40px;">
-                    <h3 style="color: white; margin-bottom: 25px; font-size: 1.4em;">🎨 Options de personnalisation</h3>
+                    <h3 style="color: white; margin-bottom: 25px; font-size: 1.4em;">Options de personnalisation</h3>
                     
                     <div class="input-group">
                         <label for="customizations">Vos modifications (optionnel)</label>
                         <textarea id="customizations" placeholder="Ex: Change les couleurs en bleu et blanc, ajoute un formulaire de contact, remplace les images..."></textarea>
-                        <p style="color: rgba(255,255,255,0.6); font-size: 0.9em; margin-top: 8px;">💡 Soyez précis pour de meilleurs résultats</p>
+                        <p style="color: rgba(255,255,255,0.6); font-size: 0.9em; margin-top: 8px;">Soyez précis pour de meilleurs résultats</p>
                     </div>
 
                     <button class="clone-btn" onclick="cloneWithCustomization()">
-                        🚀 Cloner avec personnalisations
+                        Cloner avec personnalisations
                     </button>
                 </div>
 
                 <button class="new-clone-btn" onclick="resetToStart()" style="display: block; margin: 30px auto 0;">
-                    ← Changer d'URL
+                    Changer d'URL
                 </button>
             </div>
 
@@ -693,23 +529,6 @@
     </div>
 
     <script>
-        // Parallax scroll effect for liquid background
-        let scrollPos = 0;
-        
-        window.addEventListener('scroll', () => {
-            scrollPos = window.pageYOffset;
-            const waves = document.querySelector('body');
-            
-            if (waves) {
-                // Move waves slower than scroll for parallax effect
-                const parallaxSpeed = 0.3;
-                waves.style.setProperty('--scroll-y', `${scrollPos * parallaxSpeed}px`);
-            }
-        });
-
-        // Add CSS variable for scroll position
-        document.documentElement.style.setProperty('--scroll-y', '0px');
-
         let currentUrl = '';
 
         function validateUrl() {
@@ -860,22 +679,22 @@ IMPORTANT: Réponds UNIQUEMENT avec le code HTML complet, prêt à être utilis�
             
             let html = `
                 <div class="preview-section">
-                    <h3>✅ Site cloné avec succès !</h3>
+                    <h3>Site cloné avec succès !</h3>
                     <p style="opacity: 0.8; margin-bottom: 20px;">Basé sur: ${originalUrl}</p>
                     
                     <div class="code-preview">
-                        <button class="copy-btn" onclick="copyCode()">📋 Copier</button>
+                        <button class="copy-btn" onclick="copyCode()">Copier</button>
                         <pre id="codeContent">${previewHtml}</pre>
                     </div>
                 </div>
 
                 <div class="download-section">
-                    <h3 style="margin-bottom: 20px;">📥 Télécharger votre site</h3>
+                    <h3 style="margin-bottom: 20px;">Télécharger votre site</h3>
                     <p style="margin-bottom: 30px; opacity: 0.9;">Prêt à être hébergé sur GitHub Pages, Netlify, ou votre serveur</p>
-                    <button class="download-btn" onclick="downloadHTML()">⬇️ Télécharger HTML</button>
-                    <button class="download-btn" onclick="previewInNewTab()">👁️ Prévisualiser</button>
+                    <button class="download-btn" onclick="downloadHTML()">Télécharger HTML</button>
+                    <button class="download-btn" onclick="previewInNewTab()">Prévisualiser</button>
                     <br>
-                    <button class="new-clone-btn" onclick="resetCloner()">← Cloner un autre site</button>
+                    <button class="new-clone-btn" onclick="resetCloner()">Cloner un autre site</button>
                 </div>
             `;
 
@@ -898,7 +717,7 @@ IMPORTANT: Réponds UNIQUEMENT avec le code HTML complet, prêt à être utilis�
             
             const btn = document.querySelector('.copy-btn');
             const originalText = btn.textContent;
-            btn.textContent = '✅ Copié !';
+            btn.textContent = 'Copié !';
             setTimeout(() => {
                 btn.textContent = originalText;
             }, 2000);
