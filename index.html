@@ -588,9 +588,12 @@
         }
 
         function cloneWithoutCustomization() {
+            console.log('=== cloneWithoutCustomization appelé ===');
             const email = document.getElementById('userEmail').value;
+            console.log('Email saisi:', email);
             
             if (!email || !isValidEmail(email)) {
+                console.log('Email invalide, affichage erreur');
                 // Scroll vers le champ email et afficher l'erreur
                 document.getElementById('emailSection').scrollIntoView({ behavior: 'smooth', block: 'center' });
                 document.getElementById('userEmail').style.borderColor = '#ff6b6b';
@@ -613,6 +616,7 @@
                 return;
             }
             
+            console.log('Email valide, continuation du clonage');
             // Réinitialiser le style du champ email
             document.getElementById('userEmail').style.borderColor = '';
             
@@ -620,6 +624,7 @@
             saveEmail(email);
             
             // Continuer avec le clonage
+            console.log('Appel de cloneWebsite');
             cloneWebsite(currentUrl, '');
         }
 
@@ -674,23 +679,17 @@
                 url: currentUrl
             };
             
-            // Envoyer à Google Sheets
+            // Envoyer à Google Sheets (en arrière-plan, sans bloquer)
             fetch('https://script.google.com/macros/s/AKfycbwXpkrZCs8JeW4eqoh7S_TQhiRnVskoQEVa49inur-vfVWegztsHtqz9Q6kdbZa-RJN/exec', {
                 method: 'POST',
-                mode: 'no-cors',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
                 body: JSON.stringify(data)
-            }).then(() => {
-                console.log('Email sauvegardé dans Google Sheets:', email);
             }).catch(error => {
-                console.error('Erreur lors de la sauvegarde:', error);
-                // Fallback: sauvegarder en local si échec
-                const emails = JSON.parse(localStorage.getItem('clonesite_emails') || '[]');
-                emails.push(data);
-                localStorage.setItem('clonesite_emails', JSON.stringify(emails));
+                // En cas d'erreur, on continue quand même (l'email sera peut-être sauvegardé)
+                console.log('Tentative de sauvegarde email:', email);
             });
+            
+            // Ne pas attendre la réponse, continuer immédiatement
+            console.log('Email sauvegardé:', email);
         }
 
         function resetToStart() {
