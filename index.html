@@ -671,25 +671,22 @@
         }
 
         function saveEmail(email) {
-            // Préparer les données à envoyer
-            const data = {
-                email: email,
-                date: new Date().toLocaleDateString('fr-FR'),
-                time: new Date().toLocaleTimeString('fr-FR'),
-                url: currentUrl
-            };
-            
-            // Envoyer à Google Sheets (en arrière-plan, sans bloquer)
-            fetch('https://script.google.com/macros/s/AKfycbwXpkrZCs8JeW4eqoh7S_TQhiRnVskoQEVa49inur-vfVWegztsHtqz9Q6kdbZa-RJN/exec', {
-                method: 'POST',
-                body: JSON.stringify(data)
-            }).catch(error => {
-                // En cas d'erreur, on continue quand même (l'email sera peut-être sauvegardé)
-                console.log('Tentative de sauvegarde email:', email);
-            });
-            
-            // Ne pas attendre la réponse, continuer immédiatement
-            console.log('Email sauvegardé:', email);
+            // Sauvegarder localement (pour l'instant)
+            // Pour récupérer les emails plus tard, ouvre la console (F12) et tape:
+            // JSON.parse(localStorage.getItem('clonesite_emails'))
+            try {
+                const emails = JSON.parse(localStorage.getItem('clonesite_emails') || '[]');
+                emails.push({
+                    email: email,
+                    date: new Date().toISOString(),
+                    url: currentUrl
+                });
+                localStorage.setItem('clonesite_emails', JSON.stringify(emails));
+                console.log('✅ Email sauvegardé localement:', email);
+                console.log('📊 Total emails collectés:', emails.length);
+            } catch(e) {
+                console.log('Erreur sauvegarde, mais on continue:', e);
+            }
         }
 
         function resetToStart() {
